@@ -5,8 +5,11 @@ namespace PierresBakery.Models
 {
   public class Bread : Item
   {
-
-    public static List<string> BreadTypes = new List<string> {"Sourdough", "Challah", "Baguette"};
+    public enum BreadType {
+      Sourdough,
+      Challah,
+      Baguette
+    }
 
     public Bread (string type, int count)
     {

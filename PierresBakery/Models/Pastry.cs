@@ -1,12 +1,20 @@
 using System;
-// using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace PierresBakery.Models
 {
   public class Pastry : Item
   {
-    public Pastry (int count)
+    public enum PastryType
     {
+      Croissant,
+      Muffin,
+      Cookie
+    }
+    // public static List<string> PastryTypes = new List<string> { "Croissant", "Muffin", "Cookie" };
+    public Pastry(string type, int count)
+    {
+      Type = type;
       Count = count;
       Price = 2;
       Deal = 4;

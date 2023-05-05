@@ -26,18 +26,18 @@ namespace PierresBakery.Tests
     }
 
     [TestMethod]
-    public void FindType_LooksForBreadType_String()
-    {
-      string expected = "Challah";
-      Assert.AreEqual(expected, Bread.BreadTypes[1]);
-    }
-
-    [TestMethod]
     public void GetType_GetsTypeOfBreadType_String()
     {
       Bread newBread = new Bread("Challah", 7);
       string expected = "Challah";
       Assert.AreEqual(expected, newBread.Type);
+    }
+
+    [TestMethod]
+    public void BreadType_GetsBreadTypeFromEnum_String()
+    {
+      string expected = "Sourdough";
+      Assert.AreEqual(expected, Enum.GetName(typeof(Bread.BreadType), 0));
     }
   }
 }
