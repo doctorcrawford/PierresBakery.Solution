@@ -3,8 +3,13 @@ using System;
 
 namespace PierresBakery.Models
 {
-  public class Pastry
+  public class Pastry : Item
   {
-    
+    public Pastry (int count)
+    {
+      Count = count;
+      Price = 2;
+      Deal = 4;
+    }
   }
 }
