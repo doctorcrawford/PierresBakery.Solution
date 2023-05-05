@@ -5,13 +5,12 @@ namespace PierresBakery.Models
 {
   public class Pastry : Item
   {
-    public enum PastryType
-    {
+    public enum PastryType {
       Croissant,
       Muffin,
       Cookie
     }
-    // public static List<string> PastryTypes = new List<string> { "Croissant", "Muffin", "Cookie" };
+
     public Pastry(string type, int count)
     {
       Type = type;
