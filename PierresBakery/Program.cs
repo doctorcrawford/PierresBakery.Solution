@@ -20,37 +20,57 @@ namespace PierresBakery
       Console.WriteLine("Would you like to purchase any bread? (y/n)");
       Console.WriteLine("Type 'y' to proceed to bread selection");
       Console.WriteLine("Type 'n' to move onto our pastries");
+
       string buyBread = YesOrNo();
+      string breadType = "";
+      int breadCount = 0;
+
       if (buyBread == "y")
       {
         Console.WriteLine("First of, here are our bread options:");
         ListBreadTypes();
         Console.WriteLine("Which bread type would you like?");
-        string breadType = SafeGetBreadType();
+        breadType = SafeGetBreadType();
         Console.WriteLine("In case you didn't already know, we have a special for bread:");
         Console.WriteLine("Buy 2, get one free!");
         Console.WriteLine($"How many {breadType} loaves would you like?");
-        int breadCount = SafeGetNum();
-        Bread userBread = new Bread(breadType, breadCount);
+        breadCount = SafeGetNum();
       }
+
+      Bread userBread = new Bread(breadType, breadCount);
+
       Console.WriteLine("Now onto the pastries...");
       Console.WriteLine("Would you like to purchase any pastries? (y/n)");
       Console.WriteLine("Type 'y' to proceed to pastry selection");
       Console.WriteLine("Type 'n' to tally up your total");
+
       string buyPastries = YesOrNo();
+      string pastryType = "";
+      int pastryCount = 0;
+
       if (buyPastries == "y")
       {
         Console.WriteLine("First of, here are our pastry options:");
         ListPastryTypes();
         Console.WriteLine("Which pastry type would you like?");
-        string pastryType = SafeGetPastryType();
+        pastryType = SafeGetPastryType();
         Console.WriteLine("In case you didn't already know, we have a special for pastries:");
         Console.WriteLine("Buy 3, get one free!");
         Console.WriteLine($"How many {pastryType}s would you like?");
-        int pastryCount = SafeGetNum();
-        Pastry userPastry = new Pastry(pastryType, pastryCount);
+        pastryCount = SafeGetNum();
       }
+
+      Pastry userPastry = new Pastry(pastryType, pastryCount);
       
+      int breadCost = userBread.GetCost();
+      int pastryCost = userPastry.GetCost();
+
+      Console.WriteLine("Ok let's tally up your total!");
+      Console.WriteLine($"You bought {userBread.Count} loaf(ves) of {userBread.Type} bread.");
+      Console.WriteLine($"Bread total: ${breadCost}");
+      Console.WriteLine($"You bought {userPastry.Count} {userPastry.Type}(s).");
+      Console.WriteLine($"Pastry total: ${pastryCost}");
+      Console.WriteLine($"Total Cost: ${breadCost + pastryCost}");
 
     }
 
@@ -90,17 +110,6 @@ namespace PierresBakery
         return "";
       }
     }
-
-
-    // private static void BreadOptions()
-    // {
-
-    // }
-
-    // private static void PastryOptions()
-    // {
-
-    // }
 
     private static int SafeGetNum()
     {
