@@ -13,13 +13,7 @@ namespace PierresBakery
 
     private static void BakeryRun()
     {
-      Console.WriteLine("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*");
-      Console.WriteLine($"{Banner.Welcome}");
-      Console.WriteLine("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*");
-      Console.WriteLine("We have a mix of various types of bread and pastries for you to purchase.");
-      Console.WriteLine("Would you like to purchase any bread? (y/n)");
-      Console.WriteLine("Type 'y' to proceed to bread selection");
-      Console.WriteLine("Type 'n' to move onto our pastries");
+      PrintWelcomeMessage();
 
       string buyBread = YesOrNo();
       string breadType = "";
@@ -28,9 +22,9 @@ namespace PierresBakery
       if (buyBread == "y")
       {
         Console.WriteLine("First of, here are our bread options:");
-        ListBreadTypes();
+        ListTypes<Bread.BreadType>();
         Console.WriteLine("Which bread type would you like?");
-        breadType = SafeGetBreadType();
+        breadType = SafeGetType<Bread.BreadType>();
         Console.WriteLine("In case you didn't already know, we have a special for bread:");
         Console.WriteLine("Buy 2, get one free!");
         Console.WriteLine($"How many {breadType} loaves would you like?");
@@ -51,9 +45,9 @@ namespace PierresBakery
       if (buyPastries == "y")
       {
         Console.WriteLine("First of, here are our pastry options:");
-        ListPastryTypes();
+        ListTypes<Pastry.PastryType>();
         Console.WriteLine("Which pastry type would you like?");
-        pastryType = SafeGetPastryType();
+        pastryType = SafeGetType<Pastry.PastryType>();
         Console.WriteLine("In case you didn't already know, we have a special for pastries:");
         Console.WriteLine("Buy 3, get one free!");
         Console.WriteLine($"How many {pastryType}s would you like?");
@@ -61,7 +55,7 @@ namespace PierresBakery
       }
 
       Pastry userPastry = new Pastry(pastryType, pastryCount);
-      
+
       int breadCost = userBread.GetCost();
       int pastryCost = userPastry.GetCost();
 
@@ -74,19 +68,22 @@ namespace PierresBakery
 
     }
 
-    private static void ListBreadTypes()
+    private static void PrintWelcomeMessage()
     {
-      foreach (string type in Enum.GetNames(typeof(Bread.BreadType)))
-      {
-        Console.WriteLine($"{type}");
-      }
+      Console.WriteLine("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*");
+      Console.WriteLine($"{Banner.Welcome}");
+      Console.WriteLine("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*");
+      Console.WriteLine("We have a mix of various types of bread and pastries for you to purchase.");
+      Console.WriteLine("Would you like to purchase any bread? (y/n)");
+      Console.WriteLine("Type 'y' to proceed to bread selection");
+      Console.WriteLine("Type 'n' to move onto our pastries");
     }
 
-    private static void ListPastryTypes()
+    private static void ListTypes<T>() where T : struct, Enum
     {
-      foreach (string type in Enum.GetNames(typeof(Pastry.PastryType)))
+      foreach (string type in Enum.GetNames<T>())
       {
-        Console.WriteLine($"{type}");
+        Console.WriteLine(type);
       }
     }
 
@@ -127,10 +124,10 @@ namespace PierresBakery
       }
     }
 
-    private static string SafeGetBreadType()
+    private static string SafeGetType<T>() where T : struct, Enum
     {
       string userInput = Console.ReadLine();
-      bool success = Enum.TryParse<Bread.BreadType>(userInput, true, out Bread.BreadType output);
+      bool success = Enum.TryParse<T>(userInput, true, out T output);
       if (success)
       {
         return output.ToString();
@@ -138,26 +135,10 @@ namespace PierresBakery
       else
       {
         Console.WriteLine("Please enter a valid type");
-        SafeGetBreadType();
+        ListTypes<T>();
+        SafeGetType<T>();
         return "";
       }
     }
-
-    private static string SafeGetPastryType()
-    {
-      string userInput = Console.ReadLine();
-      bool success = Enum.TryParse<Pastry.PastryType>(userInput, true, out Pastry.PastryType output);
-      if (success)
-      {
-        return output.ToString();
-      }
-      else
-      {
-        Console.WriteLine("Please enter a valid type");
-        SafeGetPastryType();
-        return "";
-      }
-    }
-
   }
 }
