@@ -59,13 +59,30 @@ namespace PierresBakery
       int breadCost = userBread.GetCost();
       int pastryCost = userPastry.GetCost();
 
-      Console.WriteLine("Ok let's tally up your total!");
-      Console.WriteLine($"You bought {userBread.Count} loaf(ves) of {userBread.Type} bread.");
-      Console.WriteLine($"Bread total: ${breadCost}");
-      Console.WriteLine($"You bought {userPastry.Count} {userPastry.Type}(s).");
-      Console.WriteLine($"Pastry total: ${pastryCost}");
-      Console.WriteLine($"Total Cost: ${breadCost + pastryCost}");
 
+      if (buyBread.Equals("") && buyPastries.Equals(""))
+      {
+        Console.WriteLine("Catch you next time!");
+      }
+      else
+      {
+        Console.WriteLine("Ok let's tally up your total!");
+        Console.WriteLine($"You bought {userBread.Count} loaf(ves) of {userBread.Type} bread.");
+        Console.WriteLine($"Bread total: ${breadCost}");
+        Console.WriteLine($"You bought {userPastry.Count} {userPastry.Type}(s).");
+        Console.WriteLine($"Pastry total: ${pastryCost}");
+        Console.WriteLine($"Total Cost: ${breadCost + pastryCost}");
+        Console.WriteLine("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*");
+        Console.WriteLine("Would you like to place another order? (y/n)");
+        string orderAgain = YesOrNo();
+        if (orderAgain == "y")
+        {
+          BakeryRun();
+        }
+        else{
+          Console.WriteLine("See ya!");
+        }
+      }
     }
 
     private static void PrintWelcomeMessage()
@@ -89,7 +106,11 @@ namespace PierresBakery
 
     private static string YesOrNo()
     {
-      string input = Console.ReadLine();
+      string? input = Console.ReadLine();
+      if (input == null)
+      {
+        return "";
+      }
       if (input.Equals("y", StringComparison.InvariantCultureIgnoreCase))
       {
         Console.WriteLine("Sounds good!");
@@ -110,7 +131,7 @@ namespace PierresBakery
 
     private static int SafeGetNum()
     {
-      string input = Console.ReadLine();
+      string? input = Console.ReadLine();
 
       if (int.TryParse(input, out int inputNum))
       {
@@ -126,7 +147,7 @@ namespace PierresBakery
 
     private static string SafeGetType<T>() where T : struct, Enum
     {
-      string userInput = Console.ReadLine();
+      string? userInput = Console.ReadLine();
       bool success = Enum.TryParse<T>(userInput, true, out T output);
       if (success)
       {
